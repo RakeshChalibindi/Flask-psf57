@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Movie</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Search Movie by ID</h2>
+    <form method="POST">
+        <label>Enter Movie ID:</label><br>
+        <input type="text" name="movie_id" required><br>
+        <input type="submit" value="Search Movie">
+    </form>
+
+    {% if searched %}
+        {% if movie %}
+            <h3>Movie Found!</h3>
+            <p><strong>Title:</strong> {{ movie.title }}</p>
+            <p><strong>Director:</strong> {{ movie.director }}</p>
+            <p><strong>Language:</strong> {{ movie.language }}</p>
+            <p><strong>Genre:</strong> {{ movie.genre }}</p>
+            <p><strong>Rating:</strong> {{ movie.rating }}</p>
+            <p><strong>Year:</strong> {{ movie.year }}</p>
+        {% else %}
+            <p>Movie not found</p>
+        {% endif %}
+    {% endif %}
+    <br>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>

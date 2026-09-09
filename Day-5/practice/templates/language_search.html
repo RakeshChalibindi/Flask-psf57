@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Search by Language</title></head>
+<body>
+    <h2>Language Search</h2>
+    <form method="POST">
+        <label>Enter Language:</label>
+        <input type="text" name="language" required>
+        <input type="submit" value="Search Movies">
+    </form>
+
+    {% if searched %}
+        {% if results %}
+            <h3>Results:</h3>
+            <ul>
+                {% for title in results %}
+                    <li>{{ title }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No movies found</p>
+        {% endif %}
+    {% endif %}
+    <br>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>

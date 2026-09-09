@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><title>All Movies</title></head>
+<body>
+    <h2>Movie List</h2>
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Director</th>
+            <th>Language</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Year</th>
+        </tr>
+        {% for movie_id, movie in movies.items() %}
+        <tr>
+            <td>{{ movie_id }}</td>
+            <td>{{ movie.title }}</td>
+            <td>{{ movie.director }}</td>
+            <td>{{ movie.language }}</td>
+            <td>{{ movie.genre }}</td>
+            <td>{{ movie.rating }}</td>
+            <td>{{ movie.year }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>
