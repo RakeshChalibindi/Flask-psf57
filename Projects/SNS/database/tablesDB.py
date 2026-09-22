@@ -1,10 +1,11 @@
 from database.connectiondb import DatabaseConnection
 
-def createTables():
+
+def CreateTables():
     try:
         db_config = DatabaseConnection()
         cursor = db_config.cursor()
-        user_table_query ="""CREATE TABLE IF NOT EXISTS USERS(
+        user_table_query = """CREATE TABLE IF NOT EXISTS USERS(
                             USERID BIGINT AUTO_INCREMENT,
                             USERNAME VARCHAR(50) NOT NULL,
                             EMAIL VARCHAR(50) NOT NULL UNIQUE,
@@ -13,8 +14,7 @@ def createTables():
                             CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                             PRIMARY KEY(USERID)
                         );"""
-
-        notes_table_query ="""CREATE TABLE IF NOT EXISTS NOTES(
+        notes_table_query = """CREATE TABLE IF NOT EXISTS NOTES(
                             NOTESID BIGINT AUTO_INCREMENT,
                             USERID BIGINT,
                             TITLE VARCHAR(255) NOT NULL,
@@ -24,7 +24,7 @@ def createTables():
                             PRIMARY KEY(NOTESID),
                             FOREIGN KEY(USERID) REFERENCES USERS(USERID) ON DELETE CASCADE
                         );"""
-        files_table_query ="""CREATE TABLE IF NOT EXISTS FILES(
+        files_table_query = """CREATE TABLE IF NOT EXISTS FILES(
                             FILEID BIGINT AUTO_INCREMENT,
                             USERID BIGINT,
                             ORIGINALNAME VARCHAR(255),
@@ -37,10 +37,13 @@ def createTables():
                             FOREIGN KEY(USERID) REFERENCES USERS(USERID) ON DELETE CASCADE
                         );"""
         cursor.execute(user_table_query)
-        cursor.execute(files_table_query)
         cursor.execute(notes_table_query)
+        cursor.execute(files_table_query)
         cursor.close()
         db_config.close()
         return "Tables Created"
+        
+
+
     except Exception as e:
-        return f"Something wrong in database/tableDB:{e}"
+        return f"Something wrong in database/tablesDB:{e}"

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Note - SNS
+{% endblock %}
+
+{% block navmenu %}
+
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('myfiles') }}">Files</a>
+    <a href="{{ url_for('mynotes') }}">Notes</a>
+    <a href="{{ url_for('profile') }}">Profile</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Edit Note</h1>
+</div>
+
+
+<!-- Flash Messages -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% for category, message in messages %}
+
+        {% if category == "msg" %}
+
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+
+        {% elif category == "err" %}
+
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+{% endwith %}
+
+
+<form method="POST"
+      action="{{ url_for('edit_notes', notesid=notesid) }}">
+
+    <div>
+
+        <label for="title">
+            Note Title
+        </label>
+
+        <br>
+
+        <input
+            type="text"
+            name="title"
+            id="title"
+            value="{{ title }}"
+            required
+        >
+
+    </div>
+
+
+    <br>
+
+
+    <div>
+
+        <label for="content">
+            Note Content
+        </label>
+
+        <br>
+
+        <textarea
+            name="content"
+            id="content"
+            rows="8"
+            required
+        >{{ content }}</textarea>
+
+    </div>
+
+
+    <br>
+
+
+    <button type="submit">
+        Update Note
+    </button>
+
+
+    <a href="{{ url_for('mynotes') }}">
+        Cancel
+    </a>
+
+</form>
+
+{% endblock %}

@@ -1,12 +1,12 @@
 import mysql.connector as SQLC
 
-def  DatabaseConnection():
+def DatabaseConnection():
     try:
         db_config = SQLC.connect(
             host="localhost",
             user="root",
-            password="Root",
-            database="SNS_Management"
+            password="Root", # your mysql workbench password
+            database="sns_management"
         )
         return db_config
     except Exception as e:
