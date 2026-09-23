@@ -282,6 +282,31 @@ def login():
 
     return redirect(url_for("login"))
 
+
+
+@app.route("/dashboard")
+def dashboard():
+
+    if "USERID" not in session:
+        flash("Please login first", "err")
+        return redirect(url_for("login"))
+
+    userid = session["USERID"]
+
+    status, notes = getNotesByUserid(userid=userid)
+
+    if status:
+        recent_notes = notes[:5]
+    else:
+        recent_notes = []
+
+    return render_template(
+        "dashboard.html",
+        username=session["USERNAME"],
+        recent_notes=recent_notes
+    )
+
+
 # ======================================================
 #                  Forgot Password
 # ======================================================
@@ -1199,15 +1224,8 @@ def delete_file(filename):
 def profile():
 
     if "USERID" not in session:
-
-        flash(
-            "Please login first",
-            "err"
-        )
-
-        return redirect(
-            url_for("login")
-        )
+        flash("Please login first", "err")
+        return redirect(url_for("login"))
 
     return render_template(
         "profile.html",

@@ -187,21 +187,29 @@ def deleteNotesRecord(notesid: int, userid: int):
         return False, f"Database Error: {e}"
 
 # # Insert file record into database
-def insertFileRecord(userid: int, filename: str, filepath: str, filetype: str):
+
+def insertFileRecord(userid, originalname, storedname, mimetype, size, filepath):
     try:
+
         db_config = DatabaseConnection()
         cursor = db_config.cursor()
 
         query = """
-        INSERT INTO FILES
-        (USERID, FILENAME, FILEPATH, FILETYPE)
-        VALUES (%s, %s, %s, %s)
+            INSERT INTO FILES
+            (USERID, ORIGINALNAME, STOREDNAME, MIMETYPE, SIZE, FILEPATH)
+            VALUES (%s, %s, %s, %s, %s, %s)
         """
 
-        cursor.execute(
-            query,
-            (userid, filename, filepath, filetype)
+        values = (
+            userid,
+            originalname,
+            storedname,
+            mimetype,
+            size,
+            filepath
         )
+
+        cursor.execute(query, values)
 
         db_config.commit()
 
@@ -211,20 +219,21 @@ def insertFileRecord(userid: int, filename: str, filepath: str, filetype: str):
         return True, "File inserted successfully"
 
     except Exception as e:
-        return False, f"Database Error: {e}"
+
+        return False, f"File insert error: {e}"
 
 
-# Get files by user ID
-def getFileByUserID(userid: int):
+def getFileByUserID(userid):
     try:
+
         db_config = DatabaseConnection()
         cursor = db_config.cursor(dictionary=True)
 
         query = """
-        SELECT *
-        FROM FILES
-        WHERE USERID = %s
-        ORDER BY FILEID DESC
+            SELECT *
+            FROM FILES
+            WHERE USERID = %s
+            ORDER BY FILEID DESC
         """
 
         cursor.execute(query, (userid,))
@@ -237,11 +246,11 @@ def getFileByUserID(userid: int):
         return True, files
 
     except Exception as e:
+
         return False, f"Database Error: {e}"
 
 
 def updateUserPassword(email, hash_password):
-
     try:
 
         connection = DatabaseConnection()
